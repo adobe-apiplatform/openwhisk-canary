@@ -1,0 +1,14 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      # Match the network name used by devtool docker compose setup
+      name: openwhisk_default
+
+services:
+  openwhisk-canary:
+    image: adobeapiplatform/openwhisk-canary
+    ports:
+    - "8086:8080"
+    - "8087:8082"

@@ -1,0 +1,74 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.5.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id "idea"
+    id 'application'
+    id "org.springframework.boot" version "2.1.5.RELEASE"
+    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id 'jacoco'
+    id 'com.github.sherter.google-java-format' version '0.8'
+}
+
+mainClassName = 'com.adobe.io.runtime.canary.CanaryLauncher'
+
+bootJar {
+    baseName = 'canary'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    compile("org.springframework.boot:spring-boot-starter-undertow")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("io.micrometer:micrometer-registry-prometheus")
+    compile("io.micrometer:micrometer-registry-datadog")
+    compile("org.apache.httpcomponents:httpclient:4.3.4")
+
+    testCompile("org.mock-server:mockserver-netty:5.5.4")
+    testCompile("org.mock-server:mockserver-client-java:5.5.4")
+    testCompile("org.springframework:spring-test:5.1.7.RELEASE")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("junit:junit")
+}
+
+jacoco {
+    applyTo run
+}
+
+task applicationCodeCoverageReport(type:JacocoReport) {
+    executionData run
+    sourceSets sourceSets.main
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.98
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
