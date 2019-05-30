@@ -1,0 +1,3 @@
+ignore:
+# Exclude the CanaryLauncher file as its not exercised by any test
+- "**/*CanaryLauncher.java"
