@@ -1,4 +1,9 @@
 # Openwhisk Canary Monitoring
+
+[![Build Status](https://travis-ci.org/adobe-apiplatform/openwhisk-canary.svg?branch=master)](https://travis-ci.org/adobe-apiplatform/openwhisk-canary)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![codecov](https://codecov.io/gh/adobe-apiplatform/openwhisk-canary/branch/master/graph/badge.svg)](https://codecov.io/gh/adobe-apiplatform/openwhisk-canary)
+
 This service provides a health status for the cluster where the openwhisk framework is running by monitoring various components. 
 
 ## Design
